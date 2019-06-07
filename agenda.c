@@ -1,0 +1,181 @@
+/**********************************************************************
+ * This is a program that allow user to put their things in time 
+ * It uses a list to represent the days and another list that represent the to-do-list. 
+ * Tasks that are allowed:
+ *  - Create calendar (Optional: create new user (ALPHA) )
+ *  - Create a new task
+ *  - Delete a task
+ *  - Update a task
+ *  - List all tasks in a day
+ *  - List all completed/uncompleted tasks
+ *
+ ***********************************************************************/
+
+
+
+#include <stdio.h>
+#include <time.h>
+#include "agenda.h"
+#define WELCOME_MESSAGE "Welcome to the agenda v. 0\n"
+
+//Error costants
+#define ERROR_ALLOCATION 1001
+#define ERROR_FILE_NOT_FOUND 1002
+
+// Other costants
+#define MAX_DESCRIPTION_LENGTH 1024
+
+/***********************************************************************
+ *                            DATA DEFINITION                          *
+ ***********************************************************************/
+
+// Represent the day dd/mm/yyyy
+typedef struct{
+  int day;
+  int month;
+  int year;  
+}Date;
+
+// Represent a single task
+typedef struct{
+  int taskId;     // Task identifier, it also identify the priority
+  char *taskDescription; // Task description
+  int done;    // Flag that checks if the task is complete
+}Task;
+
+// Represent a calendar
+typedef struct{
+  Date date;  
+  Task task; //AS HEAP???
+  
+  
+}daily_agenda;
+
+
+
+/***********************************************************************
+ *                              CLIENT                                 *
+ ***********************************************************************/
+
+
+int main(){
+
+  return EXIT_SUCCESS;
+}
+
+
+/***********************************************************************
+ *                            IMPLEMENTATION                           *
+ ***********************************************************************/
+
+
+/* Function name: menu_option
+   ---------------------------------------
+   Function that prints a welcome message, the program version and the 
+   available option that the user can use
+ */
+static void menu_options(){
+  printf(WELCOME_MESSAGE);
+  printf("What you want to do?\n");
+  printf("\t1) Create a new calendar.");
+  printf("\t2) Load a calendar from a file.");
+  printf("\t3) Create a new task");
+  printf("\t4) Delete a task.");
+  printf("\t5) Update a task."); // This has a sub-menu
+
+  printf("\t0) Exit.");
+}
+
+
+/* Function name: menu
+   ---------------------------------------
+   Function that manages what the user want'd to do by calling other functions 
+ */
+void menu(){
+  int choice;
+  int agenda_defined = 0; // flag that state if an agenda was already defined
+  int ans = 0;
+  menu_options(); 
+  scanf("%d",&choice);
+  while(1){
+    switch(choice){
+      // CREATE NEW CALENDAR
+    case 1:
+      if (agenda_defined == 1){ // Agenda already defined
+        printf("\nOops, you are using another agenda. You can:\n [1] Reset this agenda and cerate a new one./n [0] Do nothing.\n >");
+        scanf("%d",&ans);
+	while(ans != 0 || ans != 1){
+	  printf("Please insert 1 to delete the current agenda or 0 to do nothing");
+	  scanf("%d",&ans);
+	}
+
+      }else{
+        agenda_init();
+        printf("\nA new agenda has been created! \n");
+        agenda_defined = 1;
+      }
+      break;
+      // Close the program with a closing message, includes the case (choice == 0)
+    default:
+      printf("Thank you for using this program. See you soon!");
+      break;
+    }
+  }
+}
+
+
+
+/* Function name: 
+   ---------------------------------------
+   
+ */
+daily_agenda agenda_init(){
+  daily_agenda AG = malloc(sizeof AG*);
+  if(AG == NULL) error_handler(ERROR_ALLOCATION);
+}
+
+
+
+/* Function name: 
+   ---------------------------------------
+   
+ */
+
+Task NEWtask(int id, char *d){
+
+}
+
+
+
+/* Function name: 
+   ---------------------------------------
+   
+ */
+int DELtask(int id){
+
+}
+
+
+
+/* Function name: 
+   ---------------------------------------
+   
+ */
+Task FINDtask(int id){
+
+}
+
+/* Function name: 
+   ---------------------------------------
+   
+ */
+void error_handler(int e){
+  switch(e){
+  case ERROR_ALLOCATION:
+    printf("Error 1000: unable to allocate memory.");
+    break;
+  default:
+    printf("\nError: undefined.\n");
+    break;
+  }
+}
