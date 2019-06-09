@@ -1,4 +1,4 @@
-/**********************************************************************
+-/**********************************************************************
  * This is a program that allow user to put their things in time 
  * It uses a list to represent the days and another list that represent the to-do-list. 
  * Tasks that are allowed:
@@ -16,52 +16,17 @@
 #include <stdio.h>
 #include <time.h>
 #include "agenda.h"
-#define WELCOME_MESSAGE "Welcome to the agenda v. 0\n"
-
-//Error costants
-#define ERROR_ALLOCATION 1001
-#define ERROR_FILE_NOT_FOUND 1002
-
-// Other costants
-#define MAX_DESCRIPTION_LENGTH 1024
 
 /***********************************************************************
  *                            DATA DEFINITION                          *
  ***********************************************************************/
 
-// Represent the day dd/mm/yyyy
-typedef struct{
-  int day;
-  int month;
-  int year;  
-}Date;
-
-// Represent a single task
-typedef struct{
-  int taskId;     // Task identifier, it also identify the priority
-  char *taskDescription; // Task description
-  int done;    // Flag that checks if the task is complete
-}Task;
 
 // Represent a calendar
-typedef struct{
-  Date date;  
-  Task task; //AS HEAP???
-  
-  
-}daily_agenda;
-
-
-
-/***********************************************************************
- *                              CLIENT                                 *
- ***********************************************************************/
-
-
-int main(){
-
-  return EXIT_SUCCESS;
-}
+struct{  
+  Task *task; //AS HEAP???
+  statistical_data sd;
+}daag;
 
 
 /***********************************************************************
@@ -90,11 +55,15 @@ static void menu_options(){
 /* Function name: menu
    ---------------------------------------
    Function that manages what the user want'd to do by calling other functions 
+   TODO: create functions to do the checks on the existence of the agenda (Too much duplicated code)
  */
 void menu(){
   int choice;
   int agenda_defined = 0; // flag that state if an agenda was already defined
   int ans = 0;
+  daily_agenda DA;
+
+  
   menu_options(); 
   scanf("%d",&choice);
   while(1){
@@ -105,16 +74,219 @@ void menu(){
         printf("\nOops, you are using another agenda. You can:\n [1] Reset this agenda and cerate a new one./n [0] Do nothing.\n >");
         scanf("%d",&ans);
 	while(ans != 0 || ans != 1){
-	  printf("Please insert 1 to delete the current agenda or 0 to do nothing");
+	  scanf("%*[^\n]s%*1c"); // clean the buffer from strings
+	  printf("Please insert 1 to delete the current agenda or 0 to do nothing\n");
+	  scanf("%d",&ans);
+	}
+	if(ans == 0){
+	  printf("\nOkay, then I'll do nothing.\n");
+	  break;
+	}
+      }
+      // If all checks are done
+      DA = agenda_init();
+      printf("\nA new agenda has been created! \n");
+      agenda_defined = 1;
+      
+      break;
+
+      // LOAD CALENDAR FROM FILE
+    case 2:
+      if (agenda_defined == 1){ // Agenda already defined
+        printf("\nOops, you are using another agenda. You can:\n [1] Reset this agenda and cerate a new one./n [0] Do nothing.\n >");
+        scanf("%d",&ans);
+	while(ans != 0 || ans != 1){
+	  scanf("%*[^\n]s%*1c"); // clean the buffer
+	  printf("Please insert 1 to delete the current agenda or 0 to do nothing\n");
 	  scanf("%d",&ans);
 	}
 
-      }else{
-        agenda_init();
-        printf("\nA new agenda has been created! \n");
-        agenda_defined = 1;
       }
+      if(ans == 0){
+	printf("\nOkay, then I'll do nothing.\n");
+	break;
+      }
+
+      char file_name[MAX_FILE_NAME];
+      FILE *fp;
+      printf("\nInsert the file name>");
+      scanf("%s",file_name);
+
+      if ( ((fp = fopen(file_name,"r"))) == NULL){
+	error_handler(ERROR_FILE_NOT_FOUND);
+	break;
+      }
+
+      // Ready to read
+      DA = agenda_init_from_file(fp);
+      printf("\nA new agenda has been created! \n");
+      agenda_defined = 1;
       break;
+
+
+
+    // CREATE NEW TASK
+    case 3:
+      if (agenda_defined == 1){ // Agenda already defined
+        printf("\nOops, seems that you are not using an agenda. You can:\n [1] Create a new agenda./n [0] Do nothing.\n >");
+        scanf("%d",&ans);
+	while(ans != 0 || ans != 1){
+	  scanf("%*[^\n]s%*1c"); // clean the buffer
+	  printf("Please insert 1 to create a new agenda or 0 to do nothing\n");
+	  scanf("%d",&ans);
+	}
+      // Ugly code incoming
+      if(ans == 1){
+	printf("Do you want to load it from a local file? [1 = yes]");
+	scanf("%d",&ans);
+	while(ans != 0 || ans != 1){
+	  scanf("%*[^\n]s%*1c"); // clean the buffer
+	  printf("Please insert 1 to load from a file or 0 create a brand new agenda.\n");
+	  scanf("%d",&ans);
+	}
+	if (ans == 1){
+	  char file_name[MAX_FILE_NAME];
+	  FILE *fp;
+	  printf("\nInsert the file name>");
+	  scanf("%s",file_name);
+
+	  if ( ((fp = fopen(file_name,"r"))) == NULL){
+	    error_handler(ERROR_FILE_NOT_FOUND);
+	    break;
+	  }
+	  DA = agenda_init_from_file(fp);
+	  printf("\nA new agenda has been created! \n");
+	  agenda_defined = 1;
+	}else{
+	DA = agenda_init();
+	printf("\nA new agenda has been created! \n");
+	agenda_defined = 1;
+	}
+
+	// Now creation of the new task
+	NEWtask(DA);
+      }else{
+	printf("\nOkay, then I'll do nothing.\n");
+	break;
+      }
+   }
+      // No problems. Create new task.
+	NEWtask(DA);
+      break;
+      
+      // DELETE TASK
+    case 4:
+      if (agenda_defined == 1){ // Agenda already defined
+        printf("\nOops, seems that you are not using an agenda. You can:\n [1] Create a new agenda./n [0] Do nothing.\n >");
+        scanf("%d",&ans);
+	while(ans != 0 || ans != 1){
+	  scanf("%*[^\n]s%*1c"); // clean the buffer
+	  printf("Please insert 1 to create a new agenda or 0 to do nothing\n");
+	  scanf("%d",&ans);
+	}
+      // Ugly code incoming
+      if(ans == 1){
+	printf("Do you want to load it from a local file? [1 = yes]");
+	scanf("%d",&ans);
+	while(ans != 0 || ans != 1){
+	  scanf("%*[^\n]s%*1c"); // clean the buffer
+	  printf("Please insert 1 to load from a file or 0 create a brand new agenda.\n");
+	  scanf("%d",&ans);
+	}
+	if (ans == 1){
+	  char file_name[MAX_FILE_NAME];
+	  FILE *fp;
+	  printf("\nInsert the file name>");
+	  scanf("%s",file_name);
+
+	  if ( ((fp = fopen(file_name,"r"))) == NULL){
+	    error_handler(ERROR_FILE_NOT_FOUND);
+	    break;
+	  }
+	  DA = agenda_init_from_file(fp);
+	  printf("\nA new agenda has been created! \n");
+	  agenda_defined = 1;
+	}else{
+	DA = agenda_init();
+	printf("\nA new agenda has been created! \n");
+	agenda_defined = 1;
+	}	
+	break; // No deletion because no agenda where defined previously 
+      }else{
+	printf("\nOkay, then I'll do nothing.\n");
+	break;
+      }
+      }
+      // No problems found. Delete task
+      int id;
+      do{
+      printf("\nInsert the id of the task. [-1] to print a list of tasks.\n>");
+      scanf("%d",&id);
+      if (id == -1) print_tasks();
+      }while(id == -1 || id < 0);
+      
+      if(DELtask(id) == 1)
+	printf("\nTask deleted succesfully!\n");
+      break;
+      
+
+      
+    // UPDATE TASK
+    case 5:
+      if (agenda_defined == 1){ // Agenda already defined
+        printf("\nOops, seems that you are not using an agenda. You can:\n [1] Create a new agenda./n [0] Do nothing.\n >");
+        scanf("%d",&ans);
+	while(ans != 0 || ans != 1){
+	  scanf("%*[^\n]s%*1c"); // clean the buffer
+	  printf("Please insert 1 to create a new agenda or 0 to do nothing\n");
+	  scanf("%d",&ans);
+	}
+      // Ugly code incoming
+      if(ans == 1){
+	printf("Do you want to load it from a local file? [1 = yes]");
+	scanf("%d",&ans);
+	while(ans != 0 || ans != 1){
+	  scanf("%*[^\n]s%*1c"); // clean the buffer
+	  printf("Please insert 1 to load from a file or 0 create a brand new agenda.\n");
+	  scanf("%d",&ans);
+	}
+	if (ans == 1){
+	  char file_name[MAX_FILE_NAME];
+	  FILE *fp;
+	  printf("\nInsert the file name>");
+	  scanf("%s",file_name);
+
+	  if ( ((fp = fopen(file_name,"r"))) == NULL){
+	    error_handler(ERROR_FILE_NOT_FOUND);
+	    break;
+	  }
+	  DA = agenda_init_from_file(fp);
+	  printf("\nA new agenda has been created! \n");
+	  agenda_defined = 1;
+	}else{
+	DA = agenda_init();
+	printf("\nA new agenda has been created! \n");
+	agenda_defined = 1;
+	}	
+	break; // No update because no agenda where defined previously 
+      }else{
+	printf("\nOkay, then I'll do nothing.\n");
+	break;
+      }
+      }
+      // No problems found. Update task
+      int id;
+      do{
+      printf("\nInsert the id of the task. [-1] to print a list of tasks.\n>");
+      scanf("%d",&id);
+      if (id == -1) print_tasks();
+      }while(id == -1 || id < 0);
+      
+      if(UPDtask(id) == 1)
+	printf("\nTask updated succesfully!\n");
+      break;
+      
+      
       // Close the program with a closing message, includes the case (choice == 0)
     default:
       printf("Thank you for using this program. See you soon!");
@@ -136,34 +308,16 @@ daily_agenda agenda_init(){
 
 
 
-/* Function name: 
+/* Function name: agenda_init_from_file
    ---------------------------------------
-   
- */
-
-Task NEWtask(int id, char *d){
+   This function read from a file an agenda previously saved (Self-made standard).
+   Next implementaion: read agenda from Json file.
+*/
+agenda_init_from_file(fp){
 
 }
 
 
-
-/* Function name: 
-   ---------------------------------------
-   
- */
-int DELtask(int id){
-
-}
-
-
-
-/* Function name: 
-   ---------------------------------------
-   
- */
-Task FINDtask(int id){
-
-}
 
 /* Function name: 
    ---------------------------------------
