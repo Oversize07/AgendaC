@@ -5,22 +5,10 @@
  ***********************************************************************/
 
 // Represent the day dd/mm/yyyy
-typedef struct{
-  int day;
-  int month;
-  int year;  
-}Date;
-
-// Represent a single task
-typedef struct{
-  Date date;
-  int taskId;     // Task identifier, it also identify the priority
-  char *taskDescription; // Task description
-  int done;    // Flag that checks if the task is complete-
-}Task;
+typedef struct dd *Date;
 
 Task NEWtask(daily_agenda DA);
-int TASKdelete(int id);
+void TASKdelete(Task t);
 Task TASKfind(int id);
 
 // Called after a find in the heap
