@@ -1,0 +1,11 @@
+#ifndef HEAP
+#define HEAP
+
+typedef struct heap *Heap;
+
+Heap HEAPinit(int);
+void HEAPfill(Heap HP, Task tsk);
+void HEAPsort(Heap HP);
+void HEAPdisplay(Heap HP);
+
+#endif
