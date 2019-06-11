@@ -1,3 +1,7 @@
+/*
+  This file contains the heap that contains the dates 
+*/
+
 #include <stdio.h>
 #include <stflib.h>
 #include "Task.h"

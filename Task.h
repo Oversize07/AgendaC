@@ -5,11 +5,11 @@
  ***********************************************************************/
 
 // Represent the day dd/mm/yyyy
-typedef struct dd *Date;
+typedef struct dd *DATE;
 
-Task NEWtask(daily_agenda DA);
-void TASKdelete(Task t);
-Task TASKfind(int id);
+Task TASKinsert(Date d, int id, char *n, char *d);
+void TASKdelete(link t);
+link TASKfind(link t,int id);
 
 // Called after a find in the heap
 int TASKupdate(int id); 
