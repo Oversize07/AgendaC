@@ -1,5 +1,4 @@
 /*
-
   This file contains the datastructure for the daily list of tasks.
 */
 #include <stdio.h>
@@ -38,7 +37,7 @@ typedef struct Task *link;
 // Represent a single node task
 struct Task{
   int taskId;  // Task identifier, it also identify the priority
-  char *TaskName;  // Task name  
+  char *taskName;  // Task name  
   char *taskDescription; // Task description
   int done;    // Flag that checks if the task is complete-
   link next;   // Pointer to the next element of the list
@@ -55,7 +54,7 @@ static Task NEWtask(link next, int id, char *n, char *d){
   if (x == NULL) return NULL;
 
   x->taskId = id;
-  x->name = strdup(n);
+  x->taskName = strdup(n);
   x->taskDescription = strdup(d);
   x->done = 0;
   x->next = next;
@@ -118,13 +117,14 @@ static void Datedelete(DATE t){
   return;
 }
 
+
 /* Function name: TASKdelete 
    ---------------------------------------
    Deletes a task given by input (Find is a HEAP function)
  */
 static void TASKdelete(link t){
-  free(t->TaskName);
-  free(t->TaskDescription;
+  free(t->taskName);
+  free(t->taskDescription;
   free(t);
   return;
 }
@@ -163,7 +163,20 @@ int TASKupdate(link t, int id){
    ---------------------------------------
    Prints the name and the description of a task
  */
-void TASKshow(Task t);
+ void TASKshow(int id){
+   link x = FINDtask(id);
+   if(x == NULL){
+     printf("\nNo task found with that Id..\n");
+     return;
+   }
+   printf("\n------------------------------\n");
+   printf("Task Id:%d\n",x->taskId);
+   printf("Task name: %s\n",x->taskName);
+   printf("Task description:\n%s\n",x->taskDescription);
+   printf("Done? %d\n",x->done);
+   printf("------------------------------\n\n");
+   return;
+ }
 
 
 /* Function name: TASKgreater

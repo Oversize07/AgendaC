@@ -1,0 +1,21 @@
+
+# Compiles the task header and c file
+Task : Task.c Task.h
+gcc -c Task.c Task.h -o Task
+
+# Compiles the agenda header and c file
+agenda : agenda.h agenda.c
+gcc -c agenda.h agenda.c -o agenda
+
+# Compiles heap header file and c file
+Heap : heap_tasks.h heap_tasks.c
+gcc -c heap_tasks.h heap_tasks.c -o Heap
+
+
+# Link all together
+Agenda : Task agenda Heap
+	gcc Task agenda Heap -o Agenda 
+
+
+# Clean it all
+clean : rm -f Task Heap agenda 
