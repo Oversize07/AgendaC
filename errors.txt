@@ -1,0 +1,394 @@
+Task.c:193:7: error: conflicting types for ‘DATEstore’
+ FILE *DATEstore(FILE *fp, DATE t){
+       ^~~~~~~~~
+In file included from Task.c:7:0:
+Task.h:20:7: note: previous declaration of ‘DATEstore’ was here
+ FILE *DATEstore(FILE fp,DATE dte);
+       ^~~~~~~~~
+Task.c: In function ‘DATEstore’:
+Task.c:194:14: warning: too many arguments for format [-Wformat-extra-args]
+   fprintf(fp,"%d %d %d\n",t->dateId,t->day,t->month,t->year); // Date info in a row
+              ^~~~~~~~~~~~
+Task.c:195:12: error: ‘dte’ undeclared (first use in this function)
+   link j = dte->tsk.head;
+            ^~~
+Task.c:195:12: note: each undeclared identifier is reported only once for each function it appears in
+Task.c:200:1: error: expected declaration or statement at end of input
+ }
+ ^
+Task.h:20:1: error: unknown type name ‘FILE’
+ FILE *DATEstore(FILE fp,DATE dte);
+ ^~~~
+Task.h:20:17: error: unknown type name ‘FILE’
+ FILE *DATEstore(FILE fp,DATE dte);
+                 ^~~~
+heap_tasks.c:8:10: fatal error: heap_task.h: No such file or directory
+ #include "heap_task.h"
+          ^~~~~~~~~~~~~
+compilation terminated.
+In file included from heap_tasks.h:14:0:
+Task.h:20:1: error: unknown type name ‘FILE’
+ FILE *DATEstore(FILE fp,DATE dte);
+ ^~~~
+Task.h:20:17: error: unknown type name ‘FILE’
+ FILE *DATEstore(FILE fp,DATE dte);
+                 ^~~~
+heap_tasks.h:28:16: error: unknown type name ‘FILE’
+ void HEAPstore(FILE *fp, Heap HP);
+                ^~~~
+In file included from agenda.h:3:0:
+agenda.c: In function ‘menu_options’:
+agenda.c:41:10: error: ‘WELCOME_MESSAGE’ undeclared (first use in this function)
+   printf(WELCOME_MESSAGE);
+          ^~~~~~~~~~~~~~~
+agenda.c:41:10: note: each undeclared identifier is reported only once for each function it appears in
+In file included from agenda.h:3:0:
+agenda.c: In function ‘menu’:
+agenda.c:86:7: error: ‘DA’ undeclared (first use in this function); did you mean ‘Da’?
+       DA = agenda_init(MAX_DATE_NUM);
+       ^~
+       Da
+agenda.c:86:12: warning: implicit declaration of function ‘agenda_init’ [-Wimplicit-function-declaration]
+       DA = agenda_init(MAX_DATE_NUM);
+            ^~~~~~~~~~~
+agenda.c:86:24: error: ‘MAX_DATE_NUM’ undeclared (first use in this function); did you mean ‘__DATE__’?
+       DA = agenda_init(MAX_DATE_NUM);
+                        ^~~~~~~~~~~~
+                        __DATE__
+agenda.c:109:22: error: ‘MAX_FILE_NAME’ undeclared (first use in this function); did you mean ‘MAX_DATE_NUM’?
+       char file_name[MAX_FILE_NAME];
+                      ^~~~~~~~~~~~~
+                      MAX_DATE_NUM
+agenda.c:115:2: warning: implicit declaration of function ‘error_handler’ [-Wimplicit-function-declaration]
+  error_handler(ERROR_FILE_NOT_FOUND);
+  ^~~~~~~~~~~~~
+agenda.c:115:16: error: ‘ERROR_FILE_NOT_FOUND’ undeclared (first use in this function)
+  error_handler(ERROR_FILE_NOT_FOUND);
+                ^~~~~~~~~~~~~~~~~~~~
+agenda.c:120:12: warning: implicit declaration of function ‘agenda_init_from_file’ [-Wimplicit-function-declaration]
+       DA = agenda_init_from_file(fp);
+            ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:166:2: warning: implicit declaration of function ‘NEWtask’; did you mean ‘NEWdate’? [-Wimplicit-function-declaration]
+  NEWtask(DA);
+  ^~~~~~~
+  NEWdate
+agenda.c:224:21: warning: implicit declaration of function ‘print_tasks’ [-Wimplicit-function-declaration]
+       if (id == -1) print_tasks();
+                     ^~~~~~~~~~~
+agenda.c:227:10: warning: implicit declaration of function ‘DELtask’ [-Wimplicit-function-declaration]
+       if(DELtask(id) == 1)
+          ^~~~~~~
+agenda.c:277:11: error: redeclaration of ‘id’ with no linkage
+       int id;
+           ^~
+agenda.c:220:11: note: previous declaration of ‘id’ was here
+       int id;
+           ^~
+agenda.c:284:10: warning: implicit declaration of function ‘UPDtask’ [-Wimplicit-function-declaration]
+       if(UPDtask(id) == 1)
+          ^~~~~~~
+agenda.c: At top level:
+agenda.c:303:6: error: conflicting types for ‘agenda_init’
+ Heap agenda_init(int max){
+      ^~~~~~~~~~~
+agenda.c:86:12: note: previous implicit declaration of ‘agenda_init’ was here
+       DA = agenda_init(MAX_DATE_NUM);
+            ^~~~~~~~~~~
+agenda.c: In function ‘agenda_init’:
+agenda.c:305:32: error: ‘ERROR_ALLOCATION’ undeclared (first use in this function)
+   if(HP == NULL) error_handler(ERROR_ALLOCATION);
+                                ^~~~~~~~~~~~~~~~
+agenda.c: At top level:
+agenda.c:316:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:326:6: warning: conflicting types for ‘error_handler’
+ void error_handler(int e){
+      ^~~~~~~~~~~~~
+agenda.c:115:2: note: previous implicit declaration of ‘error_handler’ was here
+  error_handler(ERROR_FILE_NOT_FOUND);
+  ^~~~~~~~~~~~~
+agenda.c: In function ‘error_handler’:
+agenda.c:328:8: error: ‘ERROR_ALLOCATION’ undeclared (first use in this function)
+   case ERROR_ALLOCATION:
+        ^~~~~~~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c: In function ‘menu_options’:
+agenda.c:41:10: error: ‘WELCOME_MESSAGE’ undeclared (first use in this function)
+   printf(WELCOME_MESSAGE);
+          ^~~~~~~~~~~~~~~
+agenda.c:41:10: note: each undeclared identifier is reported only once for each function it appears in
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c: In function ‘menu’:
+agenda.c:86:7: error: ‘DA’ undeclared (first use in this function); did you mean ‘Da’?
+       DA = agenda_init(MAX_DATE_NUM);
+       ^~
+       Da
+agenda.c:86:12: warning: implicit declaration of function ‘agenda_init’ [-Wimplicit-function-declaration]
+       DA = agenda_init(MAX_DATE_NUM);
+            ^~~~~~~~~~~
+agenda.c:86:24: error: ‘MAX_DATE_NUM’ undeclared (first use in this function); did you mean ‘__DATE__’?
+       DA = agenda_init(MAX_DATE_NUM);
+                        ^~~~~~~~~~~~
+                        __DATE__
+agenda.c:109:22: error: ‘MAX_FILE_NAME’ undeclared (first use in this function); did you mean ‘MAX_DATE_NUM’?
+       char file_name[MAX_FILE_NAME];
+                      ^~~~~~~~~~~~~
+                      MAX_DATE_NUM
+agenda.c:115:2: warning: implicit declaration of function ‘error_handler’ [-Wimplicit-function-declaration]
+  error_handler(ERROR_FILE_NOT_FOUND);
+  ^~~~~~~~~~~~~
+agenda.c:115:16: error: ‘ERROR_FILE_NOT_FOUND’ undeclared (first use in this function)
+  error_handler(ERROR_FILE_NOT_FOUND);
+                ^~~~~~~~~~~~~~~~~~~~
+agenda.c:120:12: warning: implicit declaration of function ‘agenda_init_from_file’ [-Wimplicit-function-declaration]
+       DA = agenda_init_from_file(fp);
+            ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:166:2: warning: implicit declaration of function ‘NEWtask’; did you mean ‘NEWdate’? [-Wimplicit-function-declaration]
+  NEWtask(DA);
+  ^~~~~~~
+  NEWdate
+agenda.c:224:21: warning: implicit declaration of function ‘print_tasks’ [-Wimplicit-function-declaration]
+       if (id == -1) print_tasks();
+                     ^~~~~~~~~~~
+agenda.c:227:10: warning: implicit declaration of function ‘DELtask’ [-Wimplicit-function-declaration]
+       if(DELtask(id) == 1)
+          ^~~~~~~
+agenda.c:277:11: error: redeclaration of ‘id’ with no linkage
+       int id;
+           ^~
+agenda.c:220:11: note: previous declaration of ‘id’ was here
+       int id;
+           ^~
+agenda.c:284:10: warning: implicit declaration of function ‘UPDtask’ [-Wimplicit-function-declaration]
+       if(UPDtask(id) == 1)
+          ^~~~~~~
+agenda.c: At top level:
+agenda.c:303:6: error: conflicting types for ‘agenda_init’
+ Heap agenda_init(int max){
+      ^~~~~~~~~~~
+agenda.c:86:12: note: previous implicit declaration of ‘agenda_init’ was here
+       DA = agenda_init(MAX_DATE_NUM);
+            ^~~~~~~~~~~
+agenda.c: In function ‘agenda_init’:
+agenda.c:305:32: error: ‘ERROR_ALLOCATION’ undeclared (first use in this function)
+   if(HP == NULL) error_handler(ERROR_ALLOCATION);
+                                ^~~~~~~~~~~~~~~~
+agenda.c: At top level:
+agenda.c:316:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:326:6: warning: conflicting types for ‘error_handler’
+ void error_handler(int e){
+      ^~~~~~~~~~~~~
+agenda.c:115:2: note: previous implicit declaration of ‘error_handler’ was here
+  error_handler(ERROR_FILE_NOT_FOUND);
+  ^~~~~~~~~~~~~
+agenda.c: In function ‘error_handler’:
+agenda.c:328:8: error: ‘ERROR_ALLOCATION’ undeclared (first use in this function)
+   case ERROR_ALLOCATION:
+        ^~~~~~~~~~~~~~~~
+agenda.c: At top level:
+agenda.c:40:13: error: redefinition of ‘menu_options’
+ static void menu_options(){
+             ^~~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:40:13: note: previous definition of ‘menu_options’ was here
+ static void menu_options(){
+             ^~~~~~~~~~~~
+agenda.c:58:6: error: redefinition of ‘menu’
+ void menu(){
+      ^~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:58:6: note: previous definition of ‘menu’ was here
+ void menu(){
+      ^~~~
+agenda.c: In function ‘menu’:
+agenda.c:86:7: error: ‘DA’ undeclared (first use in this function); did you mean ‘Da’?
+       DA = agenda_init(MAX_DATE_NUM);
+       ^~
+       Da
+agenda.c:120:12: error: too few arguments to function ‘agenda_init_from_file’
+       DA = agenda_init_from_file(fp);
+            ^~~~~~~~~~~~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:316:1: note: declared here
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:156:9: error: too few arguments to function ‘agenda_init_from_file’
+    DA = agenda_init_from_file(fp);
+         ^~~~~~~~~~~~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:316:1: note: declared here
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:160:7: error: too few arguments to function ‘agenda_init’
+  DA = agenda_init();
+       ^~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:303:6: note: declared here
+ Heap agenda_init(int max){
+      ^~~~~~~~~~~
+agenda.c:205:9: error: too few arguments to function ‘agenda_init_from_file’
+    DA = agenda_init_from_file(fp);
+         ^~~~~~~~~~~~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:316:1: note: declared here
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:209:7: error: too few arguments to function ‘agenda_init’
+  DA = agenda_init();
+       ^~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:303:6: note: declared here
+ Heap agenda_init(int max){
+      ^~~~~~~~~~~
+agenda.c:262:9: error: too few arguments to function ‘agenda_init_from_file’
+    DA = agenda_init_from_file(fp);
+         ^~~~~~~~~~~~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:316:1: note: declared here
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:266:7: error: too few arguments to function ‘agenda_init’
+  DA = agenda_init();
+       ^~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:303:6: note: declared here
+ Heap agenda_init(int max){
+      ^~~~~~~~~~~
+agenda.c:277:11: error: redeclaration of ‘id’ with no linkage
+       int id;
+           ^~
+agenda.c:220:11: note: previous declaration of ‘id’ was here
+       int id;
+           ^~
+agenda.c: At top level:
+agenda.c:303:6: error: redefinition of ‘agenda_init’
+ Heap agenda_init(int max){
+      ^~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:303:6: note: previous definition of ‘agenda_init’ was here
+ Heap agenda_init(int max){
+      ^~~~~~~~~~~
+agenda.c:316:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:316:1: error: redefinition of ‘agenda_init_from_file’
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:316:1: note: previous definition of ‘agenda_init_from_file’ was here
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:326:6: error: redefinition of ‘error_handler’
+ void error_handler(int e){
+      ^~~~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from agenda.c:18:
+agenda.c:326:6: note: previous definition of ‘error_handler’ was here
+ void error_handler(int e){
+      ^~~~~~~~~~~~~
+In file included from agenda.h:3:0,
+                 from main.c:2:
+agenda.c: In function ‘menu_options’:
+agenda.c:41:10: error: ‘WELCOME_MESSAGE’ undeclared (first use in this function)
+   printf(WELCOME_MESSAGE);
+          ^~~~~~~~~~~~~~~
+agenda.c:41:10: note: each undeclared identifier is reported only once for each function it appears in
+In file included from agenda.h:3:0,
+                 from main.c:2:
+agenda.c: In function ‘menu’:
+agenda.c:86:7: error: ‘DA’ undeclared (first use in this function); did you mean ‘Da’?
+       DA = agenda_init(MAX_DATE_NUM);
+       ^~
+       Da
+agenda.c:86:12: warning: implicit declaration of function ‘agenda_init’ [-Wimplicit-function-declaration]
+       DA = agenda_init(MAX_DATE_NUM);
+            ^~~~~~~~~~~
+agenda.c:86:24: error: ‘MAX_DATE_NUM’ undeclared (first use in this function); did you mean ‘__DATE__’?
+       DA = agenda_init(MAX_DATE_NUM);
+                        ^~~~~~~~~~~~
+                        __DATE__
+agenda.c:109:22: error: ‘MAX_FILE_NAME’ undeclared (first use in this function); did you mean ‘MAX_DATE_NUM’?
+       char file_name[MAX_FILE_NAME];
+                      ^~~~~~~~~~~~~
+                      MAX_DATE_NUM
+agenda.c:115:2: warning: implicit declaration of function ‘error_handler’ [-Wimplicit-function-declaration]
+  error_handler(ERROR_FILE_NOT_FOUND);
+  ^~~~~~~~~~~~~
+agenda.c:115:16: error: ‘ERROR_FILE_NOT_FOUND’ undeclared (first use in this function)
+  error_handler(ERROR_FILE_NOT_FOUND);
+                ^~~~~~~~~~~~~~~~~~~~
+agenda.c:120:12: warning: implicit declaration of function ‘agenda_init_from_file’ [-Wimplicit-function-declaration]
+       DA = agenda_init_from_file(fp);
+            ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:166:2: warning: implicit declaration of function ‘NEWtask’; did you mean ‘NEWdate’? [-Wimplicit-function-declaration]
+  NEWtask(DA);
+  ^~~~~~~
+  NEWdate
+agenda.c:224:21: warning: implicit declaration of function ‘print_tasks’ [-Wimplicit-function-declaration]
+       if (id == -1) print_tasks();
+                     ^~~~~~~~~~~
+agenda.c:227:10: warning: implicit declaration of function ‘DELtask’ [-Wimplicit-function-declaration]
+       if(DELtask(id) == 1)
+          ^~~~~~~
+agenda.c:277:11: error: redeclaration of ‘id’ with no linkage
+       int id;
+           ^~
+agenda.c:220:11: note: previous declaration of ‘id’ was here
+       int id;
+           ^~
+agenda.c:284:10: warning: implicit declaration of function ‘UPDtask’ [-Wimplicit-function-declaration]
+       if(UPDtask(id) == 1)
+          ^~~~~~~
+agenda.c: At top level:
+agenda.c:303:6: error: conflicting types for ‘agenda_init’
+ Heap agenda_init(int max){
+      ^~~~~~~~~~~
+agenda.c:86:12: note: previous implicit declaration of ‘agenda_init’ was here
+       DA = agenda_init(MAX_DATE_NUM);
+            ^~~~~~~~~~~
+agenda.c: In function ‘agenda_init’:
+agenda.c:305:32: error: ‘ERROR_ALLOCATION’ undeclared (first use in this function)
+   if(HP == NULL) error_handler(ERROR_ALLOCATION);
+                                ^~~~~~~~~~~~~~~~
+agenda.c: At top level:
+agenda.c:316:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+ agenda_init_from_file(FILE *fp, Heap HP){
+ ^~~~~~~~~~~~~~~~~~~~~
+agenda.c:326:6: warning: conflicting types for ‘error_handler’
+ void error_handler(int e){
+      ^~~~~~~~~~~~~
+agenda.c:115:2: note: previous implicit declaration of ‘error_handler’ was here
+  error_handler(ERROR_FILE_NOT_FOUND);
+  ^~~~~~~~~~~~~
+agenda.c: In function ‘error_handler’:
+agenda.c:328:8: error: ‘ERROR_ALLOCATION’ undeclared (first use in this function)
+   case ERROR_ALLOCATION:
+        ^~~~~~~~~~~~~~~~
+In file included from main.c:3:0:
+command_parser.c: In function ‘parameter_parser’:
+command_parser.c:6:10: error: switch quantity not an integer
+   switch(cm){
+          ^~
+command_parser.c:8:5: warning: implicit declaration of function ‘print_today_list’ [-Wimplicit-function-declaration]
+     print_today_list();
+     ^~~~~~~~~~~~~~~~
+command_parser.c:11:3: error: expected ‘;’ before ‘default’
+   default:
+   ^~~~~~~
+main.c:9:1: error: expected declaration or statement at end of input
+ }
+ ^

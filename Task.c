@@ -3,7 +3,23 @@
 */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "Task.h"
+
+
+// Struct that contains statistical data about tasks in a day
+typedef struct{
+  int HowManyTasks;
+  int HowManyTasksCompleted;
+  int HowManyTasksUndone;
+}statistical_data;
+
+// List info
+typedef struct{
+  link head;
+  link tail;
+  statistical_data std; // Statistical data
+}lst;
 
 // Struct that contains a day 
 struct dd{
@@ -14,25 +30,6 @@ struct dd{
   int dateId; // Day identifier
 };
 
-
-// Struct that contains statistical data about tasks in a day
-typedef struct{
-  int HowManyTasks;
-  int HowManyTasksCompleted;
-  int HowManyTasksUndone;
-}statistical_data;
-
-
-// List info
-typedef struct{
-  link head;
-  link tail;
-  statistical_data std; // Statistical data
-}lst;
-
-
-// Pointer to a task
-typedef struct Task *link; 
 
 // Represent a single node task
 struct Task{
@@ -49,7 +46,7 @@ struct Task{
    Creates a new node task
 */
 
-static Task NEWtask(link next, int id, char *n, char *d){
+static link NEWtask(link next, int id, char *n, char *d){
   link x = malloc(sizeof *x);
   if (x == NULL) return NULL;
 
@@ -67,20 +64,20 @@ static Task NEWtask(link next, int id, char *n, char *d){
    Creates a new date
  */
 
-static Task NEWdate(int id, char *d, int dd, int mm, int yyyy){
+DATE NEWdate(int id, char *d, int dd, int mm, int yyyy){
   DATE x = malloc(sizeof *x);
   if (x == NULL) return NULL;
   
   x->dateId = id;
-  x->date.day = dd;
-  x->data.moth = mm;
-  x->data.year = yyyy;
-  x->tsk = NULL;
+  x->day = dd;
+  x->month = mm;
+  x->year = yyyy;
   // Set statistical data
-  x->statistical_data.HowManyTasks = 0;
-  x->statistical_data.HowManyTasksCompleted = 0;
-  x->statistical_data.HowManyTasksUndone = 0;
-  x->tsk = NULL;
+  x->tsk.std.HowManyTasks = 0;
+  x->tsk.std.HowManyTasksCompleted = 0;
+  x->tsk.std.HowManyTasksUndone = 0;
+  x->tsk.head = NULL;
+  x->tsk.tail = NULL;
   return x;
 }
 
@@ -90,11 +87,11 @@ static Task NEWdate(int id, char *d, int dd, int mm, int yyyy){
    ---------------------------------------
    Insert a new task in the list
  */
-void TASKinsert(Date d, int id, char *n, char *d ){
-  d->tsk.tail = NEWtask(NULL, id,n,d); // Insert in head
+void TASKinsert(DATE dat, int id, char *n, char *d ){
+  dat->tsk.tail = NEWtask(NULL, id,n,d); // Insert in head
   // Update statistical data
-  d->tsk.statistical_data.HowManyTasks++;
-  d->tsk.statistical_data.HowManyTasksUndone++;
+  dat->tsk.std.HowManyTasks++;
+  dat->tsk.std.HowManyTasksUndone++;
   return;
 }
 
@@ -105,12 +102,12 @@ void TASKinsert(Date d, int id, char *n, char *d ){
    Deletes a task given by input (Find is a HEAP function)
    
 */
-static void Datedelete(DATE t){
+void Datedelete(DATE t){
   link j;
 
   // Delete nodes from list (from head)
-  for(j = t->tsk; t->tsk->next == NULL; j = t->tsk){   
-    t->tsk = t->tsk->next;
+  for(j = t->tsk.head; t->tsk.head->next == NULL; j = t->tsk.head){   
+    t->tsk.head = t->tsk.head->next;
     TASKdelete(j);
   }
   free(t);
@@ -122,9 +119,9 @@ static void Datedelete(DATE t){
    ---------------------------------------
    Deletes a task given by input (Find is a HEAP function)
  */
-static void TASKdelete(link t){
+void TASKdelete(link t){
   free(t->taskName);
-  free(t->taskDescription;
+  free(t->taskDescription);
   free(t);
   return;
 }
@@ -151,8 +148,8 @@ link FINDtask(link head, int id){
    TODO: implement the function that allows to move a task from
    a day to another
  */
-int TASKupdate(link t, int id){
-  link x = TASKfind(t, id);
+int TASKupdate(link head, int id){
+  link x = TASKfind(head, id);
   
   return 0;
 }
@@ -163,8 +160,8 @@ int TASKupdate(link t, int id){
    ---------------------------------------
    Prints the name and the description of a task
  */
- void TASKshow(int id){
-   link x = FINDtask(id);
+ void TASKshow(link head, int id){
+   link x = FINDtask(head, id);
    if(x == NULL){
      printf("\nNo task found with that Id..\n");
      return;
@@ -183,9 +180,21 @@ int TASKupdate(link t, int id){
    ---------------------------------------
    Return if the task t1 has higher priority
  */
-int TASKgreater(Task t1, Task t2){
-  return (t1.taskId > t2.taskId);
+int TASKgreater(link t1, link t2){
+  return (t1->taskId > t2->taskId);
 }
 
 
 
+/* Function name: TASKgreater
+   ---------------------------------------
+   Store in a file all tasks in a date plus the data info
+ */
+FILE *DATEstore(FILE *fp, DATE t){
+  fprintf(fp,"%d %d %d\n",t->dateId,t->day,t->month,t->year); // Date info in a row
+  link j = dte->tsk.head;
+  for(; j->next == NULL; j = j->next){   
+    fprintf(fp,"%d %s %s %d\n",j->taskId,j->taskName,j->taskDescription,j->done);
+  
+ 
+}

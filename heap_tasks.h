@@ -17,11 +17,13 @@
 typedef struct heap *Heap;
 
 Heap HEAPinit(int maxNx);
-void HEAPfill(Heap HP, Task dte);
+Heap HEAPcheckSize(Heap HP);
+void HEAPfill(Heap HP, link dte);
 void HEAPsort(Heap HP);
 void HEAPdisplay(Heap HP);
 void swap(Heap h, int i, int j);
 void HEAPbuild(Heap h);
 void HEAPsort(Heap h);
-Task  HEAPfind(Heap h, int id);
+link HEAPfind(Heap h, int id);
+void HEAPstore(FILE *fp, Heap HP);
 #endif

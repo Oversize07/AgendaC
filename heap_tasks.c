@@ -3,13 +3,14 @@
 */
 
 #include <stdio.h>
-#include <stflib.h>
+#include <stdlib.h>
 #include "Task.h"
 #include "heap_task.h"
 
 struct heap{
   Date *dte;
   int heapsize;
+  int heapsizeMax;
 };
 
 
@@ -99,7 +100,7 @@ void HEAPify(Heap h, int i){
   if((l < h->heapsize) && (TASKgreater(h->dte[l],)))
      largest = l;
   else
-       largest = i;
+     largest = i;
   if((r<h->heapsize) && (TASKgreater(h->dte[r], h->dte[largest]) ))
        largest = r;
   if(largest != i){
@@ -143,13 +144,48 @@ void HEAPsort(Heap h){
 
 /* Function name: HEAPfind
    ---------------------------------------
-   Function that find a item given the task id.
-   It scan the elements of the vector that hold the tasks
+   Function that find a item given the date id.
+   It scan the elements of the vector that hold the dates 
  */
-Task HEAPfind(Heap h, int id){
+link HEAPfind(Heap h, int id){
   int i;
   for (i = 0; i < h->heapsize; i++)
     if (h->dte[i].dateId == id)
       return h->dte[i];
   return NULL; // No task found with that id
+}
+
+
+
+
+/* Function name: HEAPcheckSize
+   ---------------------------------------
+   Function that checks the size of the heap. If it is almost full,
+   it reallocate to get a new size twice as big 
+ */
+Heap HEAPcheckSize(Heap HP){
+  if (HP->heapsize == HP->heapsize){
+    realloc(HP,sizeof(HP->heapsizeMax*2));
+    HP->heapsizeMax *=2;
+  }
+  return HP;
+}
+
+
+
+
+/* Function name: HEAPcheckSize
+   ---------------------------------------
+   Store the Heap in a file
+*/
+void HEAPstore(FILE *fp, Heap HP){
+  if (fp == NULL) {printf("\nOps, could not find the file.\n"); return;}
+  int i;
+  fprintf(fp,"%d %d\n",HP->heapsize, HP->heapsizeMax); // Writing dimensions
+
+  // Writing elements
+  for(i = 0; i<HP->heapsize;i++)
+    fp = DATEstore(fp,HP); // Leave the date print with tasks to the Task module
+
+  return;
 }

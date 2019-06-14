@@ -1,4 +1,4 @@
--/**********************************************************************
+/**********************************************************************
  *  This is a program that allow user to put their things in time 
  * It uses a list to represent the days and another list that represent the to-do-list. 
  * Tasks that are allowed:
@@ -16,17 +16,15 @@
 #include <stdio.h>
 #include <time.h>
 #include "agenda.h"
+#include "heap_tasks.h"
+
+
 
 /***********************************************************************
  *                            DATA DEFINITION                          *
  ***********************************************************************/
 
 
-// Represent a calendar
-struct{  
-  Task *task; //AS HEAP???
-  statistical_data sd;
-}daag;
 
 
 /***********************************************************************
@@ -61,12 +59,13 @@ void menu(){
   int choice;
   int agenda_defined = 0; // flag that state if an agenda was already defined
   int ans = 0;
-  daily_agenda DA;
+  Heap Da;
 
   
   menu_options(); 
   scanf("%d",&choice);
   while(1){
+    HEAPcheckSize(Da);
     switch(choice){
       // CREATE NEW CALENDAR
     case 1:
@@ -84,7 +83,7 @@ void menu(){
 	}
       }
       // If all checks are done
-      DA = agenda_init();
+      DA = agenda_init(MAX_DATE_NUM);
       printf("\nA new agenda has been created! \n");
       agenda_defined = 1;
       
@@ -297,13 +296,14 @@ void menu(){
 
 
 
-/* Function name: 
+/* Function name: agenda_init
    ---------------------------------------
-   
+   Create a new agenda
  */
-daily_agenda agenda_init(){
-  daily_agenda AG = malloc(sizeof AG*);
-  if(AG == NULL) error_handler(ERROR_ALLOCATION);
+Heap agenda_init(int max){
+  Heap HP = HEAPinit(max);;
+  if(HP == NULL) error_handler(ERROR_ALLOCATION);
+  return HP;
 }
 
 
@@ -313,8 +313,8 @@ daily_agenda agenda_init(){
    This function read from a file an agenda previously saved (Self-made standard).
    Next implementaion: read agenda from Json file.
 */
-agenda_init_from_file(fp){
-
+agenda_init_from_file(FILE *fp, Heap HP){
+  HEAPstore(fp,HP);
 }
 
 
